@@ -2,15 +2,15 @@
 
 namespace WH.Common.Dtos
 {
-    public class EmailCensorshipRequestDto
+    public class ClassifyEmailRequestDto
     {
         public IEnumerable<string> ClassifiedWords { get; set; }
         public string EmailText { get; set; }
     }
-    public class EmailCensorshipResponseDto : ITrackableDto
+    public class ClassifyEmailResponseDto : ITrackableDto
     {
         public bool HasClassifiedWords { get; set; } = false;
-        public String EmailText { get; set; }
+        public string EmailText { get; set; }
         public TimeSpan ElapsedTime { get ; set ; }
     }
 }

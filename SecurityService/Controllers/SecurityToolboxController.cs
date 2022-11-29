@@ -17,10 +17,10 @@ namespace SecurityService.Controllers
         }
 
         [HttpPost]
-        [Route("emailcensorship")]
+        [Route("classifyemail")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<EmailCensorshipResponseDto> CensorEmailWithBadWords([FromBody] EmailCensorshipRequestDto emailCensorshipDto)
+        public ActionResult<ClassifyEmailResponseDto> ClassifyEmail([FromBody] ClassifyEmailRequestDto emailCensorshipDto)
         {
             try
             {
@@ -29,9 +29,9 @@ namespace SecurityService.Controllers
 
                 var text = emailCensorshipDto.EmailText;
 
-                EmailCensorshipResponseDto res = new()
+                ClassifyEmailResponseDto res = new()
                 {
-                    HasClassifiedWords = EmailHelpers.CensorClassifiedWords(emailCensorshipDto.ClassifiedWords.ToArray(), ref text),
+                    HasClassifiedWords = EmailHelpers.ClassifyEmail(emailCensorshipDto.ClassifiedWords.ToArray(), ref text),
                     EmailText = text,
                     ElapsedTime = watch.Elapsed
                 };
