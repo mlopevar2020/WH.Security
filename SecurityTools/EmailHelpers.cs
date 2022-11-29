@@ -16,7 +16,7 @@ namespace WH.Common.SecurityTools
         /// <returns>
         /// true/false If any of the classified words or phrases were located in the email.
         /// </returns>
-        public static bool CensorClassifiedWords(string[] classifieds, ref string text)
+        public static bool ClassifyEmail(string[] classifieds, ref string text)
         {
             var hasClassifiedWords = false;
 
