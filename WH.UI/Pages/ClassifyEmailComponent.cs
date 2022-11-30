@@ -14,7 +14,7 @@ namespace WH.UI.Pages
         {
         }
 
-        protected async Task<ClassifyEmailVm> ClassifyEmail(ClassifyEmailVm vm)
+        protected async Task ClassifyEmail(ClassifyEmailVm vm)
         {
             var dto = new ClassifyEmailRequestDto() 
             {
@@ -25,10 +25,7 @@ namespace WH.UI.Pages
             var res = await _securityToolBoxService.ClassifyEmail(dto);
 
             if(res.HasClassifiedWords)
-                vm.EmailText = dto.EmailText;
-
-            return vm;
+                vm.EmailText = res.EmailText;
         }
-
     }
 }

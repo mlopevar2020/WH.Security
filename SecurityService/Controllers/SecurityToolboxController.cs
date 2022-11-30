@@ -20,18 +20,18 @@ namespace SecurityService.Controllers
         [Route("classifyemail")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ClassifyEmailResponseDto> ClassifyEmail([FromBody] ClassifyEmailRequestDto emailCensorshipDto)
+        public ActionResult<ClassifyEmailResponseDto> ClassifyEmail([FromBody] ClassifyEmailRequestDto classifyEmailRequestDto)
         {
             try
             {
                 var watch = new Stopwatch();
                 watch.Start();
 
-                var text = emailCensorshipDto.EmailText;
+                var text = classifyEmailRequestDto.EmailText;
 
                 ClassifyEmailResponseDto res = new()
                 {
-                    HasClassifiedWords = EmailHelpers.ClassifyEmail(emailCensorshipDto.ClassifiedWords.ToArray(), ref text),
+                    HasClassifiedWords = EmailHelpers.ClassifyEmail(classifyEmailRequestDto.ClassifiedWords.ToArray(), ref text),
                     EmailText = text,
                     ElapsedTime = watch.Elapsed
                 };

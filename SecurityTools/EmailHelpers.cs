@@ -25,7 +25,7 @@ namespace WH.Common.SecurityTools
 
             classifieds = classifieds.Where(c => !string.IsNullOrWhiteSpace(c))
                 .Distinct()
-                .Select(c => Regex.Escape(c))
+                .Select(c => Regex.Escape(c.Trim()))
                 .OrderByDescending(s => s.Length)
                 .ToArray();
 
@@ -35,7 +35,7 @@ namespace WH.Common.SecurityTools
             Regex rx = new(string.Join('|', classifieds)
                 , RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Compiled);
             
-            string result = rx.Replace(text, (Match m) => {
+            var result = rx.Replace(text, (Match m) => {
                 hasClassifiedWords = true;
                 return new string(CensorWildcard, m.Length);
             });
