@@ -1,15 +1,55 @@
 ﻿@page "/"
+@using WH.UI.ViewModels
 @inherits ClassifyEmailComponent
 
 
 <PageTitle>Index</PageTitle>
 
-<h1>Classified Email</h1>
+<h2>Classified Email</h2>
 
-This software will act as a filter to test the incoming email
+<p>This software will act as a filter to test the incoming email
 text, detect if the email might be classified, and additionally replace any sensitive text with censored
-***** characters.
+***** characters.</p>
+
+<div>
+    <input type="text" placeholder="Enter a sensitive word." @bind="@InputWord" />
+    <button @onclick="AddClassifiedWord">Add</button>
+    <button @onclick="ClearClassifiedWords">Clear</button>
+    <button @onclick="Classify">Classify</button>
+</div>
+
+<textarea disabled="true" value="@string.Join('\n', ClassifiedWords)" rows="5"/>
+<h3>Enter Email</h3>
+<textarea @bind="@EmailText" rows="10"/>
+<h3>Classified Email</h3>
+<textarea disabled="true" @bind="@ClassifiedEmail" rows="10"/>
 
 @code {
-   //TODO
+    private string InputWord { get; set; }
+    private string EmailText { get; set; }
+    private string ClassifiedEmail { get; set; }
+
+    private List<string> ClassifiedWords { get; set; } = new();
+
+    private void AddClassifiedWord()
+    {
+        if(!string.IsNullOrWhiteSpace(InputWord)) {
+            ClassifiedWords.Add(InputWord);
+            InputWord = string.Empty;
+        }
+    }
+
+    private void ClearClassifiedWords()
+    {
+        ClassifiedWords.Clear();
+        EmailText = string.Empty;
+        ClassifiedEmail = string.Empty;
+    }
+
+    private async Task Classify()
+    {
+        ClassifyEmailVm vm = new() { ClassifiedWords = ClassifiedWords, EmailText = EmailText };
+        await ClassifyEmail(vm);
+        ClassifiedEmail = vm.EmailText;
+    }
 }

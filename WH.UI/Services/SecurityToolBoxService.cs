@@ -1,13 +1,12 @@
-﻿using WH.Common.Dtos;
+﻿using System.Net.Http.Json;
+using WH.Common.Dtos;
 using WH.UI.Services.Interfaces;
-using System.Net.Http.Json;
 
 namespace WH.UI.Services
 {
     public class SecurityToolBoxService : ISecurityToolBoxService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<SecurityToolBoxService> _logger;
 
         public SecurityToolBoxService(HttpClient httpClient) 
         {
@@ -26,7 +25,7 @@ namespace WH.UI.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                Console.WriteLine(ex);
                 throw;
             }
         }
